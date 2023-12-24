@@ -1,0 +1,14 @@
+{
+  "name": "qmk_pcinfo",
+  "version": "1.0.0",
+  "description": "get pc info to send to qmk",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "marco antonio",
+  "license": "ISC",
+  "dependencies": {
+    "systeminformation": "^5.21.22"
+  }
+}
