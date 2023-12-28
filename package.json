@@ -9,6 +9,7 @@
   "author": "marco antonio",
   "license": "ISC",
   "dependencies": {
+    "node-hid": "^3.0.0",
     "systeminformation": "^5.21.22"
   }
 }

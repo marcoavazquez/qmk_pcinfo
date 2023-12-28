@@ -1,42 +1,24 @@
-const si = require('systeminformation')
+const pcInfo = require('./pcInfo')
+const hid = require('./hid')
 
-async function getInfo() {
+async function send() {
   try {
-    const cpuTemperature = await si.cpuTemperature()
-    const { controllers: gpu } = await si.graphics()
-    const ram = await si.mem()
+    const { cpu, gpu, ram } = await pcInfo.getInfo()
 
-    const oneGigabyte = 1024 * 1024 * 1024
+    const vramUsed = (gpu.vram.used * 100) / gpu.vram.total 
+    const ramUsed = (ram.used * 100) / ram.total
 
-    const data = {
-      cpu: {
-        temperature: cpuTemperature.main,
-      },
-      gpu: {
-        temperature: gpu[0].temperatureGpu,
-        vram: {
-          total: gpu[0].memoryTotal,
-          used: gpu[0].memoryUsed,
-          free: gpu[0].memoryFree,
-          unit: 'mb',
-        }
-      },
-      ram: {
-        total: ram.total / oneGigabyte,
-        free: ram.free / oneGigabyte,
-        used: ram.used / oneGigabyte,
-        active: ram.active / oneGigabyte,
-        available: ram.available / oneGigabyte,
-        unit: 'gb',
-      }
-    }
-
-    console.log("data:", data)
+    const data = [
+      Math.round(cpu.temperature * 10),
+      gpu.temperature,
+      Math.round(vramUsed),
+      Math.round(ramUsed)
+    ]
+    console.log("data: ", data)
+    // hid.sendData(data)
   } catch (e) {
-    console.log("error: ", e)
+    console.log(e)
   }
 }
 
-console.log("getting info...")
-
-setInterval(getInfo, 10000)
+setInterval(send, 1000)
