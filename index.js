@@ -15,10 +15,11 @@ async function send() {
       Math.round(ramUsed)
     ]
     console.log("data: ", data)
-    // hid.sendData(data)
+    hid.sendData(data)
   } catch (e) {
-    console.log(e)
+    console.log("Error:", e)
+    throw e
   }
 }
 
-setInterval(send, 1000)
+setInterval(send, 2000)
