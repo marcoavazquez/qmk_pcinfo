@@ -35,13 +35,6 @@ async function sendData(data = []) {
       throw "Cant find the device :("
     }
 
-    // const devices = await HID.devicesAsync()
-    // console.log("devices: ", devices)
-
-    // kb = await HID.HIDAsync.open(VID, PID)
-    // console.log("keyboard:", await kb.getDeviceInfo())
-    // return
-
     // kb.on('data', function (data) {
     //   console.log('kb data:', data, data.toString('hex'))
     // })
@@ -56,8 +49,6 @@ async function sendData(data = []) {
 
     const fullData = data.concat(new Array(32 - data.length).fill(0x00))
     console.log("sending:", fullData)
-  
-    // await device.sendFeatureReport(fullData)
 
     await device.write(fullData)
 
