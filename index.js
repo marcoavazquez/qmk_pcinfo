@@ -77,7 +77,12 @@ async function send() {
   }
 }
 
-setInterval(send, 1000)
+function start() {
+  console.log("Sending data to keyboard...")
+  setInterval(send, 3000)
+}
+
+start()
 
 /*******************
 RAM 32.5% VRAM 43.2%
