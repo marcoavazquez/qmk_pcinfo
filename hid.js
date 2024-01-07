@@ -6,10 +6,6 @@ const RAW_USAGE_ID = 0X61;
 const VID = 0x6E61;
 const PID = 0x6063;
 
-/**
- * [CPU_TEMP * 10, GPU_TEMP, VRAM_USED_PERCENT, RAM_USED_PERCENT]
- */
-
 const devices = HID.devices();
 
 const isSnapKB = function (d) {
@@ -19,6 +15,19 @@ const isSnapKB = function (d) {
     && d.usage === RAW_USAGE_ID
 }
 
+/**
+ * 
+ * @param {*} data [
+ *  CPU_lOAD_INTEGER,
+ *  CPU_TEMP_INTEGER,
+ *  CPU_POWER_INTEGER,
+ *  GPU_lOAD_INTEGER,
+ *  GPU_TEMP_INTEGER,
+ *  GPU_POWER_INTEGER,
+ *  GPU_VRAM_INTEGER
+ *  RAM_INTEGER
+ * ]
+ */
 async function sendData(data = []) {
   let kb = null
   try {
@@ -48,7 +57,6 @@ async function sendData(data = []) {
     }
 
     const fullData = data.concat(new Array(32 - data.length).fill(0x00))
-    console.log("sending:", fullData)
 
     await device.write(fullData)
 

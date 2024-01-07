@@ -5,9 +5,14 @@
 const OHMurl = "http://localhost:8085"
 
 async function fetchData() {
-  const resp = (await fetch(`${OHMurl}/data.json`)).json()
-  const data = await resp
-  return data
+  try {
+    const resp = (await fetch(`${OHMurl}/data.json`)).json()
+    const data = await resp
+    return data
+  } catch (e) {
+    console.log('Unable to get PC Info, Is the Open Hardware Monitor Server Running?')
+    throw e
+  }
 }
 
 function array2Object(objWithChildren) {

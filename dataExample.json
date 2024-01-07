@@ -1,0 +1,337 @@
+ {
+  "AMD Ryzen 7 5800X": {
+    "Clocks": {
+      "Bus Speed": {
+        "min": "99.8 MHz",
+        "max": "99.8 MHz",
+        "value": "99.8 MHz"
+      },
+      "CPU Core #1": {
+        "min": "3593.3 MHz",
+        "max": "4841.0 MHz",
+        "value": "4841.0 MHz"
+      },
+      "CPU Core #2": {
+        "min": "3593.3 MHz",
+        "max": "4841.0 MHz",
+        "value": "4841.0 MHz"
+      },
+      "CPU Core #3": {
+        "min": "3593.3 MHz",
+        "max": "4791.1 MHz",
+        "value": "3872.8 MHz"
+      },
+      "CPU Core #4": {
+        "min": "3593.3 MHz",
+        "max": "4841.0 MHz",
+        "value": "3872.8 MHz"
+      },
+      "CPU Core #5": {
+        "min": "3593.3 MHz",
+        "max": "4791.1 MHz",
+        "value": "3872.8 MHz"
+      },
+      "CPU Core #6": {
+        "min": "3593.3 MHz",
+        "max": "4791.1 MHz",
+        "value": "3872.8 MHz"
+      },
+      "CPU Core #7": {
+        "min": "3593.3 MHz",
+        "max": "4791.1 MHz",
+        "value": "3872.8 MHz"
+      },
+      "CPU Core #8": {
+        "min": "3593.3 MHz",
+        "max": "4841.0 MHz",
+        "value": "4841.0 MHz"
+      },
+      "min": "",
+      "max": "",
+      "value": ""
+    },
+    "Temperatures": {
+      "CPU Package": {
+        "min": "38.9 °C",
+        "max": "55.3 °C",
+        "value": "38.9 °C"
+      },
+      "CPU CCD #1": {
+        "min": "31.5 °C",
+        "max": "50.0 °C",
+        "value": "31.5 °C"
+      },
+      "min": "",
+      "max": "",
+      "value": ""
+    },
+    "Load": {
+      "CPU Total": {
+        "min": "0.0 %",
+        "max": "1.6 %",
+        "value": "0.0 %"
+      },
+      "CPU Core #1": {
+        "min": "0.0 %",
+        "max": "6.3 %",
+        "value": "0.0 %"
+      },
+      "CPU Core #2": {
+        "min": "0.0 %",
+        "max": "3.9 %",
+        "value": "0.0 %"
+      },
+      "CPU Core #3": {
+        "min": "0.0 %",
+        "max": "0.8 %",
+        "value": "0.0 %"
+      },
+      "CPU Core #4": {
+        "min": "0.0 %",
+        "max": "0.8 %",
+        "value": "0.0 %"
+      },
+      "CPU Core #5": {
+        "min": "0.0 %",
+        "max": "0.0 %",
+        "value": "0.0 %"
+      },
+      "CPU Core #6": {
+        "min": "0.0 %",
+        "max": "0.8 %",
+        "value": "0.0 %"
+      },
+      "CPU Core #7": {
+        "min": "0.0 %",
+        "max": "0.0 %",
+        "value": "0.0 %"
+      },
+      "CPU Core #8": {
+        "min": "0.0 %",
+        "max": "6.3 %",
+        "value": "0.0 %"
+      },
+      "min": "",
+      "max": "",
+      "value": ""
+    },
+    "Powers": {
+      "CPU Package": {
+        "min": "24.1 W",
+        "max": "37.8 W",
+        "value": "24.6 W"
+      },
+      "CPU Cores": {
+        "min": "1.6 W",
+        "max": "20.0 W",
+        "value": "1.8 W"
+      },
+      "CPU Core #1": {
+        "min": "0.1 W",
+        "max": "2.1 W",
+        "value": "0.7 W"
+      },
+      "CPU Core #2": {
+        "min": "0.2 W",
+        "max": "4.0 W",
+        "value": "0.3 W"
+      },
+      "CPU Core #3": {
+        "min": "0.0 W",
+        "max": "1.8 W",
+        "value": "0.0 W"
+      },
+      "CPU Core #4": {
+        "min": "0.1 W",
+        "max": "3.1 W",
+        "value": "0.1 W"
+      },
+      "CPU Core #5": {
+        "min": "0.0 W",
+        "max": "2.3 W",
+        "value": "0.0 W"
+      },
+      "CPU Core #6": {
+        "min": "0.0 W",
+        "max": "0.9 W",
+        "value": "0.0 W"
+      },
+      "CPU Core #7": {
+        "min": "0.0 W",
+        "max": "0.9 W",
+        "value": "0.1 W"
+      },
+      "CPU Core #8": {
+        "min": "0.3 W",
+        "max": "5.1 W",
+        "value": "0.6 W"
+      },
+      "min": "",
+      "max": "",
+      "value": ""
+    },
+    "min": "",
+    "max": "",
+    "value": ""
+  },
+  "Generic Memory": {
+    "Load": {
+      "Memory": {
+        "min": "36.3 %",
+        "max": "36.6 %",
+        "value": "36.3 %"
+      },
+      "min": "",
+      "max": "",
+      "value": ""
+    },
+    "Data": {
+      "Used Memory": {
+        "min": "5.8 GB",
+        "max": "5.8 GB",
+        "value": "5.8 GB"
+      },
+      "Available Memory": {
+        "min": "10.1 GB",
+        "max": "10.1 GB",
+        "value": "10.1 GB"
+      },
+      "min": "",
+      "max": "",
+      "value": ""
+    },
+    "min": "",
+    "max": "",
+    "value": ""
+  },
+  "NVIDIA NVIDIA GeForce RTX 2060": {
+    "Clocks": {
+      "GPU Core": {
+        "min": "300.0 MHz",
+        "max": "600.0 MHz",
+        "value": "300.0 MHz"
+      },
+      "GPU Memory": {
+        "min": "405.0 MHz",
+        "max": "810.0 MHz",
+        "value": "405.0 MHz"
+      },
+      "GPU Shader": {
+        "min": "0.0 MHz",
+        "max": "0.0 MHz",
+        "value": "0.0 MHz"
+      },
+      "min": "",
+      "max": "",
+      "value": ""
+    },
+    "Temperatures": {
+      "GPU Core": {
+        "min": "36.0 °C",
+        "max": "38.0 °C",
+        "value": "36.0 °C"
+      },
+      "min": "",
+      "max": "",
+      "value": ""
+    },
+    "Load": {
+      "GPU Core": {
+        "min": "0.0 %",
+        "max": "23.0 %",
+        "value": "1.0 %"
+      },
+      "GPU Frame Buffer": {
+        "min": "1.0 %",
+        "max": "22.0 %",
+        "value": "11.0 %"
+      },
+      "GPU Video Engine": {
+        "min": "0.0 %",
+        "max": "0.0 %",
+        "value": "0.0 %"
+      },
+      "GPU Bus Interface": {
+        "min": "0.0 %",
+        "max": "0.0 %",
+        "value": "0.0 %"
+      },
+      "GPU Memory": {
+        "min": "15.8 %",
+        "max": "16.3 %",
+        "value": "16.0 %"
+      },
+      "min": "",
+      "max": "",
+      "value": ""
+    },
+    "Fans": {
+      "GPU": {
+        "min": "0 RPM",
+        "max": "919 RPM",
+        "value": "895 RPM"
+      },
+      "min": "",
+      "max": "",
+      "value": ""
+    },
+    "Controls": {
+      "GPU Fan": {
+        "min": "0.0 %",
+        "max": "3.0 %",
+        "value": "2.0 %"
+      },
+      "min": "",
+      "max": "",
+      "value": ""
+    },
+    "Powers": {
+      "GPU Power": {
+        "min": "10.0 W",
+        "max": "12.0 W",
+        "value": "10.5 W"
+      },
+      "min": "",
+      "max": "",
+      "value": ""
+    },
+    "Data": {
+      "GPU Memory Free": {
+        "min": "5142.9 MB",
+        "max": "5172.4 MB",
+        "value": "5160.5 MB"
+      },
+      "GPU Memory Used": {
+        "min": "971.6 MB",
+        "max": "1001.1 MB",
+        "value": "983.5 MB"
+      },
+      "GPU Memory Total": {
+        "min": "6144.0 MB",
+        "max": "6144.0 MB",
+        "value": "6144.0 MB"
+      },
+      "min": "",
+      "max": "",
+      "value": ""
+    },
+    "Throughput": {
+      "GPU PCIE Rx": {
+        "min": "0.0 KB/s",
+        "max": "51.8 MB/s",
+        "value": "0.0 KB/s"
+      },
+      "GPU PCIE Tx": {
+        "min": "0.0 KB/s",
+        "max": "2.0 MB/s",
+        "value": "0.0 KB/s"
+      },
+      "min": "",
+      "max": "",
+      "value": ""
+    },
+    "min": "",
+    "max": "",
+    "value": ""
+  }
+}

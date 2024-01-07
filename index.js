@@ -16,20 +16,20 @@ const gpuName = "NVIDIA NVIDIA GeForce RTX 2060"
 function formatData(data) {
 
   const cpu = {
-    temperature: valueToNumberArray(data[cpuName].Temperatures["CPU Package"].value),
-    load: valueToNumberArray(data[cpuName].Load["CPU Total"].value),
-    power: valueToNumberArray(data[cpuName].Powers["CPU Package"].value)
+    temperature: stringToRoundedInt(data[cpuName].Temperatures["CPU Package"].value),
+    load: stringToRoundedInt(data[cpuName].Load["CPU Total"].value),
+    power: stringToRoundedInt(data[cpuName].Powers["CPU Package"].value)
   }
 
   const ram = {
-    load: valueToNumberArray(data[ramName].Load["Memory"].value)
+    load: stringToRoundedInt(data[ramName].Load["Memory"].value)
   }
 
   const gpu = {
-    temperature: valueToNumberArray(data[gpuName].Temperatures["GPU Core"].value),
-    load: valueToNumberArray(data[gpuName].Load["GPU Core"].value),
-    vram: valueToNumberArray(data[gpuName].Load["GPU Memory"].value),
-    power: valueToNumberArray(data[gpuName].Powers['GPU Power'].value)
+    temperature: stringToRoundedInt(data[gpuName].Temperatures["GPU Core"].value),
+    load: stringToRoundedInt(data[gpuName].Load["GPU Core"].value),
+    vram: stringToRoundedInt(data[gpuName].Load["GPU Memory"].value),
+    power: stringToRoundedInt(data[gpuName].Powers['GPU Power'].value)
   }
 
   return {
@@ -39,9 +39,20 @@ function formatData(data) {
   }
 }
 
-// value = "34.4 %"|"43.4 °C"|"34.5 W"
+/**
+ * @param {string} value "34.4 %"|"43.4 °C"|"34.5 W"
+ * @returns array<array<int, int>> [[34,4], [43,4], [34,5]] 
+ */
 function valueToNumberArray(value) {
   return value.split(" ")[0].split(".").map(n => +n)
+}
+
+/**
+ * @param {string} value "34.4 %"|"43.4 °C"|"34.5 W"
+ * @returns int 34, 43, 36 
+ */
+function stringToRoundedInt(value) {
+  return Math.round(parseFloat(value))
 }
 
 async function send() {
@@ -50,26 +61,15 @@ async function send() {
     const { cpu, ram, gpu } = formatData(pcData)
 
     const data = [
-      cpu.load[0],
-      cpu.load[1],
-      cpu.temperature[0],
-      cpu.temperature[1],
-      cpu.power[0],
-      cpu.power[1],
-
-      gpu.load[0],
-      gpu.load[1],
-      gpu.temperature[0],
-      gpu.temperature[1],
-      gpu.power[0],
-      gpu.power[1],
-      gpu.vram[0],
-      gpu.vram[1],
-
-      ram.load[0],
-      ram.load[1],
+      cpu.load,
+      cpu.temperature,
+      cpu.power,
+      gpu.load,
+      gpu.temperature,
+      gpu.power,
+      gpu.vram,
+      ram.load,
     ]
-    console.log("data: ", data)
     hid.sendData(data)
   } catch (e) {
     console.log("Error:", e)
@@ -77,7 +77,7 @@ async function send() {
   }
 }
 
-setInterval(send, 5000)
+setInterval(send, 1000)
 
 /*******************
 RAM 32.5% VRAM 43.2%
