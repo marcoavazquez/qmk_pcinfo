@@ -1,6 +1,7 @@
 const http = require('http')
 const fs = require('fs').promises
 const pcInfo = require('./pcinfoclient')
+const data = require('./dataExample.json')
 
 const host = 'localhost'
 const port = 8080
@@ -14,22 +15,27 @@ const requestListener = async function (req, res) {
   try {
 
     switch (req.url) {
+
       case '/':
         res.setHeader("Content-Type", "text/html")
         res.writeHead(200);
         res.end(indexHtml)
         break
+
       case '/data':
         res.setHeader("Content-Type", "application/json")
-        const data = await pcInfo.getData()
+        // const data = await pcInfo.getData()
         res.end(JSON.stringify(data))
         break
+
       default:
         let isFile = false
+
         if (req.url.includes('.css')) {
           isFile = true
           res.setHeader("Content-Type", "text/css")
         }
+
         if (req.url.includes('.js')) {
           isFile = true
           res.setHeader("Content-Type", "text/javascript")

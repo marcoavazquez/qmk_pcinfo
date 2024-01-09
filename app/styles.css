@@ -1,4 +1,45 @@
 body {
   background-color: #000000;
   color: #fafafa;
+  /* font-family: 'VT323', monospace; */
+  /* font-family: 'Press Start 2P', system-ui; */
+  /* font-family: 'Wallpoet', sans-serif; */
+  font-family: 'Cute Font', sans-serif;
+  font-size: 16px;
 }
+
+.component {
+  text-align: right;
+}
+
+.component-title {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.component-sensors {
+  display: flex;
+  gap: 1rem;
+}
+
+.component-sensor {
+  flex: 1;
+  border: 2px dotted white;
+  border-radius: 0.2rem;
+  padding: 0.5rem;
+}
+
+.component-sensor-value {
+  font-size: 3rem;
+}
+
+.component-sensor-other {
+  display: flex;
+  font-size: 1.5rem;
+  gap: 0.5rem;
+}
+
+.component-sensor-other > div {
+  flex: 1;
+}
+
