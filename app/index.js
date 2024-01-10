@@ -2,6 +2,8 @@
 window.addEventListener('load', function () {
 
   const history = setValues()
+  const needlee = document.querySelector("#needle")
+  const value = document.querySelector('#value span')
 
   // const history = document.querySelector('#history')
 
@@ -14,6 +16,7 @@ window.addEventListener('load', function () {
 
   this.setInterval(function () {
     const newValue = Math.random() * 100
+
     history.forEach(function (el, idx) {
       if (idx < history.length - 1) {
         el.style.height = history[idx + 1].style.height
@@ -21,9 +24,17 @@ window.addEventListener('load', function () {
         el.style.height = newValue + '%'
       }
     })
-  }, 1000)
+    value.textContent = newValue.toFixed(1) + '%'
+
+    needlee.style.transform = 'rotateZ('+ getNeedleValue(newValue, 100) +'deg)'
+  }, 1500)
 
 })
+
+function getNeedleValue(value, maxValue) {
+  const u = maxValue / 100
+  return (value / u) - 50
+}
 
 async function getData() {
   // const data = (await fetch('data')).json()
