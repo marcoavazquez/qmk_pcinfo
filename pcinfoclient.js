@@ -37,7 +37,7 @@ function array2Object(objWithChildren) {
   }
 }
 
-function formatData(data) {
+function filterAnd2Object(data) {
 
   return data
     .filter(function (item) {
@@ -58,7 +58,7 @@ function formatData(data) {
 async function getData() {
 
   const { Children: children } = await fetchData()
-  return formatData(children[0].Children)
+  return filterAnd2Object(children[0].Children)
 }
 
-module.exports = { getData }
+module.exports = { getData, fetchData }
