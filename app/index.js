@@ -27,13 +27,15 @@ window.addEventListener('load', function () {
     value.textContent = newValue.toFixed(1) + '%'
 
     needlee.style.transform = 'rotateZ('+ getNeedleValue(newValue, 100) +'deg)'
-  }, 1500)
+  }, 2000)
 
 })
 
 function getNeedleValue(value, maxValue) {
-  const u = maxValue / 100
-  return (value / u) - 50
+  const deg = 80
+  const totalDeg = deg * 2
+  const u = maxValue / totalDeg
+  return (value / u) - deg
 }
 
 async function getData() {

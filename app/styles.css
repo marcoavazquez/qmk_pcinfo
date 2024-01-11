@@ -33,14 +33,14 @@ main {
 }
 
 .component-sensor {
-  border: 1px solid white;
+  /* border: 1px solid #333; */
   border-radius: 0.2rem;
-  padding: 1rem 0.5rem 0 0.5rem;
-  width: 10rem;
-  background-color: rgba(1, 1, 1, 0.3);
-  /* overflow: hidden; */
+  padding: 0.5rem 0 0 0;
+  width: 12rem;
+  background-color: rgba(255, 200, 00, 0.1);
+  overflow: hidden;
   position: relative;
-  box-shadow: 0 0 0.2rem 0.2rem rgba(0, 0, 0, 0.9) inset;
+  box-shadow: 0 0 0.1rem 0.5rem rgba(255, 200, 0, 0.1);
 }
 
 .component-sensor-value {
@@ -62,13 +62,13 @@ main {
 
 .component-vumeter {
   position: absolute;
-  width: 12rem;
-  height: 12rem;
+  width: calc(12rem + 1px);
+  height: calc(12rem + 1px);
   border-style:  solid;
-  border-color: greenyellow red transparent greenyellow ;
-  border-width: 1px 2px 0 1px;
+  border-color: white red transparent white ;
+  border-width: 2px;
   border-radius: 8rem;
-  top: 0.5rem;
+  top: 0rem;
   left: 50%;
   transform: translateX(-50%);
   z-index: -1;
@@ -77,15 +77,15 @@ main {
 .component-vumeter-needle {
   position: absolute;
   width: 1px;
-  height: 12rem;
-  /* background-image: linear-gradient(180deg, cyan 50%, #911191 50%); */
+  height: calc(12rem + 1px);
+  /* background-image: linear-gradient(180deg, orange 50%, cyan 50%); */
   background-color: orange;
   top: 0rem;
-  left: calc(50% - 1px);
-  /* animation: move 3s alternate infinite; */
+  left: 50%;
+  /* animation: move 4s alternate linear infinite; */
   z-index: 0;
-  /* border: 2px solid red; */
-  transition: .5s;
+  /* border: 1px solid orange; */
+  transition: 1.5s;
 }
 
 .component-vumeter-needle::before {
@@ -93,19 +93,21 @@ main {
   width: 1rem;
   height: 1rem;
   position: absolute;
-  background-color: #111111;
+  background-color: #000000;
   top: calc(50% - 0.5rem);
   right: -0.5rem;
   border-radius: 2rem;
-  box-shadow: 0 0 1rem 0.1rem orange;
+  border: 1px solid #aaa;
+  box-shadow: 0 0 0.1rem orange;
+  box-sizing: border-box;
 }
 
 @keyframes move {
   from {
-    transform: rotateZ(-55deg);
+    transform: rotateZ(-80deg);
   }
   to {
-    transform: rotateZ(55deg);
+    transform: rotateZ(80deg);
   }
 }
 
@@ -113,9 +115,9 @@ main {
   display: flex;
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: 40%;
   align-items: end;
-  top: 0;
+  bottom: 0;
   z-index: -1;
   /* animation: moveHistory 1s infinite linear; */
 }
@@ -131,6 +133,6 @@ main {
 .component-sensor-history-item {
   flex: 1;
   /* height: 100%; */
-  border-top: 1px solid rgba(255, 255, 0, 0.1);
-  background-color: rgba(255, 255, 0, 0.3);
+  border-top: 1px solid rgba(255, 255, 0, 0.3);
+  background-color: rgba(255, 255, 0, 0.2);
 }
