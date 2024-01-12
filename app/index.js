@@ -1,27 +1,65 @@
 const cpu = {
   name: "AMD Ryzen 7 5800X",
   sensors: {
-    Load: ['CPU Total'],
-    Powers: ['CPU Package'],
-    Temperatures: ['CPU Package']
+    Load: [
+      {
+        name: 'CPU Total',
+        maxValue: 100,
+      }
+    ],
+    Powers: [
+      {
+        name: 'CPU Package',
+        maxValue: 160,
+      }
+    ],
+    Temperatures: [
+      {
+        name: 'CPU Package',
+        maxValue: 100
+      }
+    ]
   }
 }
 const ram = {
   name: "Generic Memory",
   sensors: {
-    Load: ['Memory'],
+    Load: [
+      {
+        name: 'Memory',
+        maxValue: 100,
+      }
+    ],
   }
 }
 const gpu = {
   name: "NVIDIA NVIDIA GeForce RTX 2060",
   sensors: {
-    Load: ['GPU Core', 'GPU Memory'],
-    Powers: ['GPU Power'],
-    Temperatures: ['GPU Core']
+    Load: [
+      {
+        name: 'GPU Core',
+        maxValue: 100
+      }, {
+        name: 'GPU Memory',
+        maxValue: 100
+      }
+    ],
+    Powers: [
+      {
+        name: 'GPU Power',
+        maxValue: 160,
+      }
+    ],
+    Temperatures: [
+      {
+        name: 'GPU Core',
+        maxValue: 100,
+      }
+    ]
   }
 }
 
-const components = [cpu, ram, gpu]
+const components = [gpu, cpu, ram]
 
 const fetchData = async function () {
   const data = (await fetch('data')).json()
@@ -34,12 +72,14 @@ function filterData (data) {
     const sensorsInfo = Object.entries(component.sensors).flatMap(function (sensor) {
       const sensorName = sensor[0]
       const sensorValues = sensor[1]
-
+      // conso
       const sensorData = compData[sensorName]
-      const sensorDataValues = sensorValues.map(function (name) {
+      const sensorDataValues = sensorValues.map(function (details) {
+
         return {
-          name: sensorName + ' / ' + name,
-          values: sensorData[name]
+          name: sensorName + ' / ' + details.name,
+          values: sensorData[details.name],
+          maxValue: details.maxValue,
         }
       })
       return sensorDataValues
@@ -47,6 +87,46 @@ function filterData (data) {
     return {
       name: component.name,
       values: sensorsInfo
+    }
+  })
+}
+
+async function updateData() {
+  const data = await fetchData() 
+  const filteredData = filterData(data)
+  filteredData.forEach(function (componentData) {
+    componentData.values.forEach(function (sensorData) {
+      const id = toSlug(sensorData.name)
+      const min = sensorData.values.min
+      const max = sensorData.values.max
+      const value = sensorData.values.value
+      const maxValue = sensorData.maxValue
+
+      const sensor = document.querySelector('#' + id)
+      sensor.querySelector('.component-sensor-value').textContent = value
+      sensor.querySelector('.component-sensor-min').textContent = min
+      sensor.querySelector('.component-sensor-max').textContent = max
+
+      const history = sensor.querySelectorAll('.component-sensor-history-item')
+      updateHistory(Array.from(history), value, maxValue)
+
+      const needle = sensor.querySelector('.component-sensor-vumeter-needle')
+      updateNeedle(needle, value, maxValue)
+
+    })
+  })
+}
+
+function updateHistory(history, newValue, maxValue) {
+
+  const u = maxValue / 100
+  const value = (parseFloat(newValue) / u)
+
+  history.forEach(function (el, idx) {
+    if (idx < history.length - 1) {
+      el.style.height = history[idx + 1].style.height
+    } else {
+      el.style.height = value + '%'
     }
   })
 }
@@ -59,7 +139,9 @@ function getNeedleValue(value, maxValue) {
 }
 
 function updateNeedle(needle, value, maxValue) {
-  needle.style.transform = 'rotateZ('+ getNeedleValue(value, maxValue) +'deg)'
+  needle.style.transform = 'rotateZ('
+    + getNeedleValue(parseFloat(value), maxValue)
+    + 'deg)'
 }
 
 function updateSensor(sensor, value) {
@@ -96,7 +178,7 @@ function createComponent(compName, sensors) {
   return component
 }
 
-function createSensor(sensorName, sensorValue) {
+function createSensor(sensorName, sensorValue, maxValue) {
   const className = 'component-sensor'
   const sensor = createElementWithClassName(className)
   sensor.id = toSlug(sensorName)
@@ -105,14 +187,18 @@ function createSensor(sensorName, sensorValue) {
   const needle = createElementWithClassName(className + '-vumeter-needle')
   vumeter.appendChild(needle)
   sensor.appendChild(vumeter)
+  updateNeedle(needle, sensorValue.value, maxValue)
 
   const history = createElementWithClassName(className + '-history')
+  const historyItems = []
   Array(40).fill(0).forEach(function () {
     const historyItem = createElementWithClassName(className + '-history-item')
-    console.log('appendign histoy')
+    historyItems.push(historyItem)
     history.appendChild(historyItem)
   })
   sensor.appendChild(history)
+  updateHistory(historyItems, sensorValue.value, maxValue)
+  
 
   const value = createElementWithClassName(className + '-value')
   value.textContent = sensorValue.value
@@ -137,7 +223,9 @@ function createElementWithClassName(className) {
 }
 
 function toSlug(text) {
-  return text.replaceAll(' ', '_').toLowerCase()
+  return text.replaceAll(' ', '_')
+    .replaceAll('/', '-')
+    .toLowerCase()
 }
 
 
@@ -148,11 +236,9 @@ window.addEventListener('load', async function () {
   const data = await fetchData()
   const filteredData = filterData(data)
 
-  console.log('FIlteres', filteredData)
-
   const elements = filteredData.map(function (componentData) {
     const sensors = componentData.values.map(function (sensorData) {
-      return createSensor(sensorData.name, sensorData.values)
+      return createSensor(sensorData.name, sensorData.values, sensorData.maxValue)
     })
 
     const compoment = createComponent(componentData.name, sensors)
@@ -163,4 +249,8 @@ window.addEventListener('load', async function () {
   elements.forEach(function (el) {
     mainElement.appendChild(el)
   })
+
+  setInterval(function () {
+    updateData()
+  }, 2000)
 })

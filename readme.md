@@ -5,7 +5,7 @@
 ### Run
 `node index.js`
 
-### Before run
+### Before run (only for windows :()
 
 Install [Open Hardware Monitor](https://openhardwaremonitor.org/)
 
