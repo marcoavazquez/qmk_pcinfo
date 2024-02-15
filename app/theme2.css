@@ -1,0 +1,43 @@
+.component {
+  text-align: center;
+  border: 1px solid #555;
+  border-radius: 0.5rem;
+  padding: 0 1rem 1rem 1rem;
+}
+
+.component-title {
+  padding-bottom: 0.5rem;
+}
+
+.component-sensors {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.component-sensor {
+  border-radius: 0.2rem;
+  border: 1px solid #aaa;
+  width: 8rem;
+  transition: 0.5s ease-in-out all;
+}
+
+.component-sensor-value {
+  font-size: 2rem;
+}
+
+.component-sensor-other {
+  display: flex;
+  font-size: 1.2rem;
+}
+
+.component-sensor-other > div {
+  flex: 1;
+  padding: 0 0.25rem;
+}
+
+.component-sensor.warning {
+  border: 1px solid #a33;
+  box-shadow: 0 0 0.25rem red;
+}

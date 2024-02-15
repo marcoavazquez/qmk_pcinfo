@@ -1,7 +1,6 @@
 const http = require('http')
 const fs = require('fs').promises
 const pcInfo = require('./pcinfoclient')
-const data = require('./dataExample.json')
 const { networkInterfaces } = require('os')
 
 const port = 8080
@@ -23,7 +22,9 @@ const requestListener = async function (req, res) {
 
   try {
 
-    switch (req.url) {
+    const [url] = req.url.split('?')
+
+    switch (url) {
 
       case '/':
         res.setHeader("Content-Type", "text/html")
@@ -33,7 +34,7 @@ const requestListener = async function (req, res) {
 
       case '/data':
         res.setHeader("Content-Type", "application/json")
-        // const data = await pcInfo.fetchData()
+
         const data = await pcInfo.getData()
         res.end(JSON.stringify(data))
         break

@@ -83,7 +83,7 @@ async function send() {
 
 function start() {
   console.log("Sending data to keyboard...")
-  setInterval(send, 3000)
+  setInterval(send, 1500)
 }
 
 start()

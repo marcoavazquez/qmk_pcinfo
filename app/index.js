@@ -1,10 +1,10 @@
 const cpu = {
   name: "AMD Ryzen 7 5800X",
   sensors: {
-    Load: [
+    Temperatures: [
       {
-        name: 'CPU Total',
-        maxValue: 100,
+        name: 'CPU Package',
+        maxValue: 100
       }
     ],
     Powers: [
@@ -13,12 +13,12 @@ const cpu = {
         maxValue: 160,
       }
     ],
-    Temperatures: [
+    Load: [
       {
-        name: 'CPU Package',
-        maxValue: 100
+        name: 'CPU Total',
+        maxValue: 100,
       }
-    ]
+    ],
   }
 }
 const ram = {
@@ -35,6 +35,18 @@ const ram = {
 const gpu = {
   name: "NVIDIA NVIDIA GeForce RTX 2060",
   sensors: {
+    Temperatures: [
+      {
+        name: 'GPU Core',
+        maxValue: 100,
+      }
+    ],
+    Powers: [
+      {
+        name: 'GPU Power',
+        maxValue: 160,
+      }
+    ],
     Load: [
       {
         name: 'GPU Core',
@@ -44,26 +56,23 @@ const gpu = {
         maxValue: 100
       }
     ],
-    Powers: [
-      {
-        name: 'GPU Power',
-        maxValue: 160,
-      }
-    ],
-    Temperatures: [
-      {
-        name: 'GPU Core',
-        maxValue: 100,
-      }
-    ]
   }
 }
 
 const components = [gpu, cpu, ram]
+let fetchingData = false
 
 const fetchData = async function () {
-  const data = (await fetch('data')).json()
-  return data
+  fetchingData = true
+  try {
+    const data = (await fetch('data')).json()
+    fetchingData = false
+    return data
+  } catch (e) {
+    setTimeout(() => {
+      fetchingData = false
+    }, 1000)
+  }
 }
 
 function filterData (data) {
@@ -72,7 +81,7 @@ function filterData (data) {
     const sensorsInfo = Object.entries(component.sensors).flatMap(function (sensor) {
       const sensorName = sensor[0]
       const sensorValues = sensor[1]
-      // conso
+
       const sensorData = compData[sensorName]
       const sensorDataValues = sensorValues.map(function (details) {
 
@@ -107,41 +116,11 @@ async function updateData() {
       sensor.querySelector('.component-sensor-min').textContent = min
       sensor.querySelector('.component-sensor-max').textContent = max
 
-      const history = sensor.querySelectorAll('.component-sensor-history-item')
-      updateHistory(Array.from(history), value, maxValue)
-
-      const needle = sensor.querySelector('.component-sensor-vumeter-needle')
-      updateNeedle(needle, value, maxValue)
-
+      if (typeof updateCallback === 'function') {
+        updateCallback({ sensor, min, max, value, maxValue })
+      }
     })
   })
-}
-
-function updateHistory(history, newValue, maxValue) {
-
-  const u = maxValue / 100
-  const value = (parseFloat(newValue) / u)
-
-  history.forEach(function (el, idx) {
-    if (idx < history.length - 1) {
-      el.style.height = history[idx + 1].style.height
-    } else {
-      el.style.height = value + '%'
-    }
-  })
-}
-
-function getNeedleValue(value, maxValue) {
-  const deg = 80
-  const totalDeg = deg * 2
-  const u = maxValue / totalDeg
-  return (value / u) - deg
-}
-
-function updateNeedle(needle, value, maxValue) {
-  needle.style.transform = 'rotateZ('
-    + getNeedleValue(parseFloat(value), maxValue)
-    + 'deg)'
 }
 
 function updateSensor(sensor, value) {
@@ -160,62 +139,6 @@ function setHistoryValues(history, newValue) {
 
 ///
 
-function createComponent(compName, sensors) {
-  const component = createElementWithClassName('component')
-  component.id = toSlug(compName)
-
-  const componentTitle = createElementWithClassName('component-title')
-  componentTitle.textContent = compName
-
-  const componentSensors = createElementWithClassName('component-sensors')
-  sensors.forEach(function (el) {
-    componentSensors.appendChild(el)
-  })
-  
-  component.appendChild(componentTitle)
-  component.appendChild(componentSensors)
-
-  return component
-}
-
-function createSensor(sensorName, sensorValue, maxValue) {
-  const className = 'component-sensor'
-  const sensor = createElementWithClassName(className)
-  sensor.id = toSlug(sensorName)
-
-  const vumeter = createElementWithClassName(className + '-vumeter')
-  const needle = createElementWithClassName(className + '-vumeter-needle')
-  vumeter.appendChild(needle)
-  sensor.appendChild(vumeter)
-  updateNeedle(needle, sensorValue.value, maxValue)
-
-  const history = createElementWithClassName(className + '-history')
-  const historyItems = []
-  Array(40).fill(0).forEach(function () {
-    const historyItem = createElementWithClassName(className + '-history-item')
-    historyItems.push(historyItem)
-    history.appendChild(historyItem)
-  })
-  sensor.appendChild(history)
-  updateHistory(historyItems, sensorValue.value, maxValue)
-  
-
-  const value = createElementWithClassName(className + '-value')
-  value.textContent = sensorValue.value
-  sensor.appendChild(value)
-
-  const maxMin = createElementWithClassName(className + '-other')
-  const min = createElementWithClassName(className + '-min')
-  min.textContent = sensorValue.min
-  const max = createElementWithClassName(className + '-max')
-  max.textContent = sensorValue.max
-  maxMin.appendChild(min)
-  maxMin.appendChild(max)
-  sensor.appendChild(maxMin)
-
-  return sensor
-}
-
 function createElementWithClassName(className) {
   const el = document.createElement('div')
   el.className = className
@@ -228,10 +151,37 @@ function toSlug(text) {
     .toLowerCase()
 }
 
+function loadTheme(themeNumber) {
+  const headTag = document.querySelector('head')
+
+  const jsTag = document.createElement('script')
+  jsTag.src = 'app/theme' + themeNumber + '.js'
+
+  const cssTag = document.createElement('link')
+  cssTag.href = 'app/theme' + themeNumber + '.css'
+  cssTag.rel = 'stylesheet'
+
+  headTag.appendChild(jsTag)
+  headTag.appendChild(cssTag)
+}
 
 window.addEventListener('load', async function () {
 
   const mainElement = document.querySelector('main')
+  const themeSelect = document.querySelector('#theme-selector')
+  const btnMenu = document.querySelector('#btn-menu')
+  const menu = document.querySelector('#menu')
+
+  const urlParams = new URLSearchParams(window.location.search)
+  const theme = urlParams.get('theme')
+  
+  if (!theme) {
+    loadTheme(1)
+  } else {
+    loadTheme(theme)
+    themeSelect.value = theme
+  }
+
 
   const data = await fetchData()
   const filteredData = filterData(data)
@@ -251,6 +201,19 @@ window.addEventListener('load', async function () {
   })
 
   setInterval(function () {
-    updateData()
-  }, 2000)
+    if (!fetchingData) {
+      updateData()
+    } else {
+      console.log('bussy...')
+    }
+  }, 1000)
+
+  btnMenu.addEventListener('click', function () {
+    menu.classList.toggle('show')
+  })
+
+  themeSelect.addEventListener('change', function (e) {
+    const val = e.target.value
+    window.location.href = '?theme=' + val
+  })
 })
