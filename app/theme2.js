@@ -3,6 +3,9 @@ function createSensor(sensorName, sensorValue, maxValue) {
   const sensor = createElementWithClassName(className)
   sensor.id = toSlug(sensorName)
 
+  const sensorTitle = createElementWithClassName(className + '-title')
+  sensorTitle.textContent = sensorName
+
   const value = createElementWithClassName(className + '-value')
   value.textContent = sensorValue.value
   sensor.appendChild(value)
@@ -15,6 +18,7 @@ function createSensor(sensorName, sensorValue, maxValue) {
   maxMin.appendChild(min)
   maxMin.appendChild(max)
   sensor.appendChild(maxMin)
+  sensor.appendChild(sensorTitle)
 
   return sensor
 }

@@ -48,6 +48,9 @@ function createSensor(sensorName, sensorValue, maxValue) {
   const sensor = createElementWithClassName(className)
   sensor.id = toSlug(sensorName)
 
+  const sensorTitle = createElementWithClassName(className + '-title')
+  sensorTitle.textContent = sensorName
+
   const vumeter = createElementWithClassName(className + '-vumeter')
   const needle = createElementWithClassName(className + '-vumeter-needle')
   vumeter.appendChild(needle)
@@ -77,6 +80,7 @@ function createSensor(sensorName, sensorValue, maxValue) {
   maxMin.appendChild(min)
   maxMin.appendChild(max)
   sensor.appendChild(maxMin)
+  sensor.appendChild(sensorTitle)
 
   return sensor
 }

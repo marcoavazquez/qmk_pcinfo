@@ -171,17 +171,18 @@ window.addEventListener('load', async function () {
   const themeSelect = document.querySelector('#theme-selector')
   const btnMenu = document.querySelector('#btn-menu')
   const menu = document.querySelector('#menu')
+  const refreshInput = document.querySelector('#refresh-range-input')
+  const refreshValue = document.querySelector('#refresh-range-value')
 
   const urlParams = new URLSearchParams(window.location.search)
-  const theme = urlParams.get('theme')
+  const theme = urlParams.get('theme') || 1
+  const refreshTime = urlParams.get('refresh') || 1
   
-  if (!theme) {
-    loadTheme(1)
-  } else {
-    loadTheme(theme)
-    themeSelect.value = theme
-  }
+  loadTheme(theme)
+  themeSelect.value = theme
 
+  refreshInput.value = refreshTime
+  refreshValue.textContent = refreshTime
 
   const data = await fetchData()
   const filteredData = filterData(data)
@@ -206,7 +207,7 @@ window.addEventListener('load', async function () {
     } else {
       console.log('bussy...')
     }
-  }, 1000)
+  }, refreshTime * 1000)
 
   btnMenu.addEventListener('click', function () {
     menu.classList.toggle('show')
@@ -214,6 +215,19 @@ window.addEventListener('load', async function () {
 
   themeSelect.addEventListener('change', function (e) {
     const val = e.target.value
-    window.location.href = '?theme=' + val
+    const params = new URLSearchParams({
+      theme: val,
+      refresh: refreshTime
+    })
+    window.location.href = '?' + params.toString() 
+  })
+
+  refreshInput.addEventListener('change', function (e) {
+    const params = new URLSearchParams({
+      theme: theme,
+      refresh: e.target.value
+    })
+    window.location.href = '?' + params.toString()
   })
 })
+

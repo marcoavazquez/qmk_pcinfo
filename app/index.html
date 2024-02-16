@@ -16,12 +16,19 @@
   <button id="btn-menu" class="btn-menu"></button>
   <aside class="menu" id="menu">
     <label>
-      Select theme
+      Theme
       <br />
       <select id="theme-selector">
         <option value="1">Default</option>
-        <option value="2">Small</option>
+        <option value="2">Simple</option>
       </select>
+    </label>
+    
+    <label>
+      Refresh every
+      <span id="refresh-range-value">1</span>s
+      <br/>
+      <input type="range" id="refresh-range-input" min="1" max="10" step="1" value="1"/>
     </label>
   </aside>
   <main></main>
