@@ -3,7 +3,13 @@
 `npm install`
 
 ### Run
-`node index.js`
+`node keyboard.js`
+
+I added a web server
+`node server.js`
+
+And it can run on terminal (clear the terminal before starting)
+`node console.js`
 
 ### Before run (only for windows :()
 
