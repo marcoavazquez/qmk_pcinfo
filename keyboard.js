@@ -1,5 +1,5 @@
-const pcInfo = require('./pcinfoclient')
-const hid = require('./hid')
+const pcInfo = require('./lib/pcinfoclient')
+const hid = require('./lib/hid')
 
 const cpuName = "AMD Ryzen 7 5800X"
 const ramName = "Generic Memory"
@@ -65,6 +65,7 @@ async function send() {
     const { cpu, ram, gpu } = formatData(info)
 
     const data = [
+      // 0, // indicate that is to display pc-info on the keyboard
       cpu.load,
       cpu.temperature,
       cpu.power,

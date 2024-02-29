@@ -1,0 +1,17 @@
+body {
+  background-color: black;
+  color: white;
+}
+
+.matrix {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.matrix input {
+  width: 25%;
+  height: 2rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}

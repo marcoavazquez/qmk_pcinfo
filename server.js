@@ -1,7 +1,8 @@
 const http = require('http')
 const fs = require('fs').promises
-const pcInfo = require('./pcinfoclient')
 const { networkInterfaces } = require('os')
+const pcInfo = require('./pcinfoclient')
+const underglow = require('./underglow')
 
 const port = 8080
 
@@ -38,6 +39,24 @@ const requestListener = async function (req, res) {
         const data = await pcInfo.getData()
         res.end(JSON.stringify(data))
         break
+      case '/send':
+
+        if (req.method !== 'POST') {
+          break;
+        }
+        const chunks = []
+        req.on('data', function (chunk) {
+          chunks.push(chunk)
+        })
+        req.on('end', function () {
+          const body = Buffer.concat(chunks)
+          const resData = underglow.send(body)
+          res.end(JSON.stringify({
+            req: body.toString(),
+            resp: resData
+          }))
+        })
+        break
 
       default:
         let isFile = false
@@ -51,9 +70,13 @@ const requestListener = async function (req, res) {
           isFile = true
           res.setHeader("Content-Type", "text/javascript")
         }
+        if (req.url.includes('.html')) {
+          isFile = true
+          res.setHeader("Content-Type", "text/html")
+        }
 
         if (isFile) {
-          const file = await fs.readFile(__dirname + req.url)
+          const file = await fs.readFile(__dirname + url)
           res.writeHead(200)
           res.end(file)
         } else {
@@ -73,7 +96,7 @@ const requestListener = async function (req, res) {
 const server = http.createServer(requestListener)
 
 async function readIndexFileAndStart() {
-  indexHtml = await fs.readFile(__dirname + "/app/index.html")
+  indexHtml = await fs.readFile(__dirname + "/web/index.html")
   server.listen(port, host, function () {
     host = getIpLocal()
     console.log(`Server is running on http://${host}:${port}`)

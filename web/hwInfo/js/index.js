@@ -4,13 +4,13 @@ const cpu = {
     Temperatures: [
       {
         name: 'CPU Package',
-        maxValue: 100
+        maxValue: 90
       }
     ],
     Powers: [
       {
         name: 'CPU Package',
-        maxValue: 160,
+        maxValue: 110,
       }
     ],
     Load: [
@@ -65,7 +65,7 @@ let fetchingData = false
 const fetchData = async function () {
   fetchingData = true
   try {
-    const data = (await fetch('data')).json()
+    const data = (await fetch('/data')).json()
     fetchingData = false
     return data
   } catch (e) {
@@ -155,10 +155,10 @@ function loadTheme(themeNumber) {
   const headTag = document.querySelector('head')
 
   const jsTag = document.createElement('script')
-  jsTag.src = 'app/theme' + themeNumber + '.js'
+  jsTag.src = 'js/theme' + themeNumber + '.js'
 
   const cssTag = document.createElement('link')
-  cssTag.href = 'app/theme' + themeNumber + '.css'
+  cssTag.href = 'css/theme' + themeNumber + '.css'
   cssTag.rel = 'stylesheet'
 
   headTag.appendChild(jsTag)
