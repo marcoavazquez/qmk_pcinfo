@@ -93,11 +93,14 @@ const renderSensor = (sensor) => {
 }
 
 const getBar = (percent, warning) => {
-  const numBlocks = Math.round(percent)
-  const barUsed = "x".repeat(numBlocks)
-  const empty = "x".repeat(100 - numBlocks)
+  const numBlocks = Math.floor(Math.round(percent) / 2)
+  const cursor = numBlocks % 2 === 0 ? '█' : '▌' 
+  // const barUsed = "═".repeat(numBlocks)
+  // const empty = "═".repeat(100 - numBlocks)
+  const barUsed = "█".repeat(numBlocks)
+  const empty = " ".repeat(50 - numBlocks)
   const color = warning ? '\x1b[31m' : '\x1b[32m'
-  return color + barUsed + '\x1b[90m' + empty + reset
+  return '\x1b[100m' + color + barUsed + cursor + '\x1b[90m' + empty + reset
 }
 
 const getData = async () => {

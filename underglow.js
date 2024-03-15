@@ -11,7 +11,7 @@ const send = function (data) {
 
 
     hid.sendData([
-      1, // indicate that is rgb control
+      // 1, // indicate that is rgb control
       parseInt(index),
       red,
       green,

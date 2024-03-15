@@ -64,6 +64,8 @@ async function send() {
     const info = await pcInfo.getData()
     const { cpu, ram, gpu } = formatData(info)
 
+    // const time = new Date()
+
     const data = [
       // 0, // indicate that is to display pc-info on the keyboard
       cpu.load,
@@ -74,6 +76,12 @@ async function send() {
       gpu.power,
       gpu.vram,
       ram.load,
+      // time.getFullYear() - 2000,
+      // time.getMonth(),
+      // time.getDate(),
+      // time.getDay(),
+      // time.getHours(),
+      // time.getMinutes(),
     ]
     hid.sendData(data)
   } catch (e) {
